@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PK Technologies</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#071426;color:white}
+header{text-align:center;padding:25px;background:#102d50}
+.logo{font-size:35px;font-weight:bold;color:#00eaff}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:15px;background:#13243c}
+button{cursor:pointer;border:0;border-radius:7px;padding:11px 15px;background:#00d9ff;color:#071426;font-weight:bold;margin:4px}
+button:hover{background:#fff}
+section{max-width:1000px;margin:auto;padding:25px 16px}
+h1,h2{color:#00eaff}
+.hero{text-align:center;padding:45px 15px;background:linear-gradient(135deg,#102d50,#285080)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card,.panel{background:#122945;padding:20px;border-radius:12px;margin:12px 0}
+.card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+input{width:100%;padding:12px;margin:7px 0 15px;border-radius:6px;border:1px solid #aaa}
+label{display:block}
+.hidden{display:none!important}
+.message{padding:12px;background:#164b54;border-radius:8px;overflow-wrap:anywhere}
+.small{color:#cbd8e8;font-size:13px}
+table{border-collapse:collapse;width:100%;min-width:650px}
+td,th{border:1px solid #58708c;padding:9px;text-align:left}
+.tablewrap{overflow-x:auto}
+footer{text-align:center;padding:25px;background:#10243d}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">PK TECHNOLOGIES</div>
+ <p>Dream It. Discover It. Design It. Build It.</p>
+ <p>Robotics | Technology | Projects | Prototypes</p>
+</header>
+
+<nav>
+ <button onclick="showPage('home')">Home</button>
+ <button onclick="showPage('about')">About Us</button>
+ <button onclick="showPage('projects')">Projects</button>
+ <button onclick="showPage('join')">Join Us</button>
+ <button onclick="showPage('login')">Member Login</button>
+ <button onclick="showPage('forgot')">Forgot Password</button>
+ <button onclick="showPage('adminLogin')">Admin</button>
+ <button onclick="showPage('contact')">Contact</button>
+</nav>
+
+<div id="home" class="page">
+ <div class="hero">
+  <h1>Imagine. Invent. Innovate.</h1>
+  <p>We develop technology projects and build prototypes.</p>
+  <button onclick="showPage('join')">Become a Member</button>
+ </div>
+ <section>
+  <div class="cards">
+   <div class="card">
+    <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e" alt="Robot">
+    <h2>Robotics</h2><p>Robots and automation.</p>
+   </div>
+   <div class="card">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="Electronics">
+    <h2>Electronics</h2><p>Sensors, circuits and Arduino.</p>
+   </div>
+   <div class="card">
+    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt="Technology team">
+    <h2>Prototypes</h2><p>Turn ideas into working models.</p>
+   </div>
+  </div>
+  <div class="panel">
+   <h2>Our Community</h2>
+   <h3>Members joined: <span id="memberCount">0</span></h3>
+  </div>
+ </section>
+</div>
+
+<div id="about" class="page hidden">
+ <section>
+  <h1>About Us</h1>
+  <p>PK Technologies explores robotics, electronics, programming and innovative projects.</p>
+  <div class="cards">
+   <div class="card"><h2>Founder: Pranav</h2></div>
+   <div class="card"><h2>Founder: Keerthivassan</h2></div>
+  </div>
+ </section>
+</div>
+
+<div id="projects" class="page hidden">
+ <section><h1>Our Projects</h1>
+  <div class="cards">
+   <div class="card"><h2>Robotics</h2><p>Robot design and automation.</p></div>
+   <div class="card"><h2>Smart Sensors</h2><p>Distance, light and temperature measurement.</p></div>
+   <div class="card"><h2>Arduino</h2><p>Electronic prototypes and control systems.</p></div>
+   <div class="card"><h2>Software</h2><p>Websites and applications.</p></div>
+  </div>
+ </section>
+</div>
+
+<div id="join" class="page hidden">
+ <section><div class="panel">
+  <h1>Member Registration</h1>
+  <form id="registerForm">
+   <label>Full name</label><input id="regName" required>
+   <label>Phone number</label><input id="regPhone" type="tel" required>
+   <label>Email</label><input id="regEmail" type="email">
+   <label>Choose username</label><input id="regUsername" required minlength="3">
+   <label>Create password</label><input id="regPassword" type="password" required minlength="8">
+   <button type="submit">Register</button>
+  </form>
+  <p id="registerMessage" class="message hidden"></p>
+ </div></section>
+</div>
+
+<div id="login" class="page hidden">
+ <section><div class="panel">
+  <h1>Member Login</h1>
+  <form id="loginForm">
+   <label>Member ID or username</label><input id="loginUser" required>
+   <label>Password</label><input id="loginPassword" type="password" required>
+   <button type="submit">Login</button>
+  </form>
+  <p id="loginMessage" class="message hidden"></p>
+ </div></section>
+</div>
+
+<div id="dashboard" class="page hidden">
+ <section><div class="panel">
+  <h1>Member Dashboard</h1>
+  <p id="welcomeText"></p><p id="memberDetails"></p>
+  <button onclick="logout()">Logout</button>
+ </div></section>
+</div>
+
+<div id="forgot" class="page hidden">
+ <section><div class="panel">
+  <h1>Reset Password</h1>
+  <form id="forgotForm">
+   <label>Member ID or username</label><input id="forgotUser" required>
+   <label>Registered phone number</label><input id="forgotPhone" type="tel" required>
+   <label>New password</label><input id="newPassword" type="password" minlength="8" required>
+   <button type="submit">Reset Password</button>
+  </form>
+  <p id="forgotMessage" class="message hidden"></p>
+ </div></section>
+</div>
+
+<div id="adminLogin" class="page hidden">
+ <section><div class="panel">
+  <h1>Administrator Login</h1>
+  <form id="adminForm">
+   <label>Admin code</label><input id="adminCode" type="password" required>
+   <button type="submit">Open Admin</button>
+  </form>
+  <p id="adminMessage" class="message hidden"></p>
+ </div></section>
+</div>
+
+<div id="admin" class="page hidden">
+ <section>
+  <h1>Admin Dashboard</h1>
+  <div class="panel">
+   <h2>Total members: <span id="adminCount">0</span></h2>
+   <button onclick="renderAdmin()">Refresh</button>
+   <button onclick="exportMembers()">Export CSV</button>
+   <button onclick="adminLogout()">Logout Admin</button>
+  </div>
+  <div class="panel">
+   <div class="tablewrap">
+    <table>
+     <thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Email</th><th>Username</th><th>Registered</th></tr></thead>
+     <tbody id="adminTable"></tbody>
+    </table>
+   </div>
+   <p id="emptyMembers" class="hidden">No members registered yet.</p>
+  </div>
+ </section>
+</div>
+
+<div id="contact" class="page hidden">
+ <section><div class="panel">
+  <h1>Contact Us</h1>
+  <p>PK Technologies</p>
+  <p>Founders: Pranav and Keerthivassan</p>
+  <p>Add your official business email and contact number here.</p>
+ </div></section>
+</div>
+
+<footer>
+ <p>PK Technologies</p>
+ <p>Dream It. Discover It. Design It. Build It.</p>
+</footer>
+
+<script>
+"use strict";
+
+// DEMO ONLY: This code is visible to visitors.
+// Do not use browser storage for real member passwords.
+const ADMIN_CODE = "672013";
+const KEY = "pkTechDemoMembers";
+let currentMember = null;
+let adminAuthenticated = false;
+
+function getMembers() {
+  try {
+    const data = JSON.parse(localStorage.getItem(KEY) || "[]");
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveMembers(members) {
+  localStorage.setItem(KEY, JSON.stringify(members));
+  updateCounts();
+}
+
+function updateCounts() {
+  const count = getMembers().length;
+  document.getElementById("memberCount").textContent = count;
+  document.getElementById("adminCount").textContent = count;
+}
+
+function showPage(id) {
+  if (id === "admin" && !adminAuthenticated) id = "adminLogin";
+
+  document.querySelectorAll(".page").forEach(page =>
+    page.classList.add("hidden")
+  );
+
+  const page = document.getElementById(id);
+  if (page) page.classList.remove("hidden");
+
+  if (id === "admin") renderAdmin();
+  updateCounts();
+  window.scrollTo(0, 0);
+}
+
+function message(id, text) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.classList.remove("hidden");
+}
+
+function hideMessage(id) {
+  const el = document.getElementById(id);
+  el.textContent = "";
+  el.classList.add("hidden");
+}
+
+function findMember(identifier) {
+  const key = identifier.trim().toLowerCase();
+  return getMembers().find(m =>
+    m.id.toLowerCase() === key ||
+    m.username.toLowerCase() === key
+  );
+}
+
+function generateID(members) {
+  let n = 1000;
+  while (members.some(m => m.id === "RN" + n)) n++;
+  return "RN" + n;
+}
+
+// REGISTER
+document.getElementById("registerForm").addEventListener("submit", event => {
+  event.preventDefault();
+  hideMessage("registerMessage");
+
+  const members = getMembers();
+  const name = document.getElementById("regName").value.trim();
+  const phone = document.getElementById("regPhone").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  const username = document.getElementById("regUsername").value.trim();
+  const password = document.getElementById("regPassword").value;
+
+  if (password.length < 8) {
+    message("registerMessage", "Password must have at least 8 characters.");
+    return;
+  }
+
+  if (members.some(m => m.username.toLowerCase() === username.toLowerCase())) {
+    message("registerMessage", "That username already exists.");
+    return;
+  }
+
+  const member = {
+    id: generateID(members),
+    name, phone, email, username, password,
+    registeredAt: new Date().toLocaleString()
+  };
+
+  members.push(member);
+  saveMembers(members);
+  document.getElementById("registerForm").reset();
+
+  message("registerMessage",
+    "Registration successful! Your Member ID is " + member.id);
+});
+
+// MEMBER LOGIN
+document.getElementById("loginForm").addEventListener("submit", event => {
+  event.preventDefault();
+  hideMessage("loginMessage");
+
+  const member = findMember(document.getElementById("loginUser").value);
+  const password = document.getElementById("loginPassword").value;
+
+  if (!member || member.password !== password) {
+    message("loginMessage", "Incorrect member ID, username or password.");
+    return;
+  }
+
+  currentMember = member;
+  document.getElementById("welcomeText").textContent =
+    "Welcome, " + member.name + "!";
+  document.getElementById("memberDetails").textContent =
+    "Your Member ID: " + member.id + " | Username: " + member.username;
+
+  document.getElementById("loginForm").reset();
+  showPage("dashboard");
+});
+
+function logout() {
+  currentMember = null;
+  showPage("home");
+}
+
+// FORGOT PASSWORD — DEMONSTRATION ONLY
+document.getElementById("forgotForm").addEventListener("submit", event => {
+  event.preventDefault();
+  hideMessage("forgotMessage");
+
+  const id = document.getElementById("forgotUser").value.trim().toLowerCase();
+  const phone = document.getElementById("forgotPhone").value.trim();
+  const password = document.getElementById("newPassword").value;
+  const members = getMembers();
+
+  const index = members.findIndex(m =>
+    (m.id.toLowerCase() === id || m.username.toLowerCase() === id) &&
+    m.phone === phone
+  );
+
+  if (index < 0) {
+    message("forgotMessage", "Member details could not be verified.");
+    return;
+  }
+
+  if (password.length < 8) {
+    message("forgotMessage", "Password must have at least 8 characters.");
+    return;
+  }
+
+  members[index].password = password;
+  saveMembers(members);
+  document.getElementById("forgotForm").reset();
+  message("forgotMessage", "Password reset in this browser. Please log in.");
+});
+
+// ADMIN LOGIN
+document.getElementById("adminForm").addEventListener("submit", event => {
+  event.preventDefault();
+  hideMessage("adminMessage");
+
+  if (document.getElementById("adminCode").value !== ADMIN_CODE) {
+    message("adminMessage", "Incorrect admin code.");
+    return;
+  }
+
+  adminAuthenticated = true;
+  document.getElementById("adminForm").reset();
+  showPage("admin");
+});
+
+// ADMIN MEMBER TABLE
+function renderAdmin() {
+  if (!adminAuthenticated) {
+    showPage("adminLogin");
+    return;
+  }
+
+  const members = getMembers();
+  const tbody = document.getElementById("adminTable");
+  tbody.replaceChildren();
+
+  members.forEach(member => {
+    const row = document.createElement("tr");
+    [
+      member.id, member.name, member.phone,
+      member.email || "", member.username, member.registeredAt
+    ].forEach(value => {
+      const cell = document.createElement("td");
+      cell.textContent = value || "";
+      row.appendChild(cell);
+    });
+    tbody.appendChild(row);
+  });
+
+  document.getElementById("emptyMembers")
+    .classList.toggle("hidden", members.length > 0);
+
+  updateCounts();
+}
+
+function adminLogout() {
+  adminAuthenticated = false;
+  showPage("home");
+}
+
+// EXPORT MEMBER DETAILS
+function exportMembers() {
+  if (!adminAuthenticated) {
+    showPage("adminLogin");
+    return;
+  }
+
+  const members = getMembers();
+  if (!members.length) {
+    alert("No members to export.");
+    return;
+  }
+
+  const data = [
+    ["Member ID", "Name", "Phone", "Email", "Username", "Registered"],
+    ...members.map(m => [
+      m.id, m.name, m.phone, m.email || "", m.username, m.registeredAt
+    ])
+  ];
+
+  const csv = data.map(row => row.map(value => {
+    let s = String(value ?? "");
+    if (/^[=+\-@]/.test(s)) s = "'" + s;
+    return '"' + s.replace(/"/g, '""') + '"';
+  }).join(",")).join("\r\n");
+
+  const url = URL.createObjectURL(
+    new Blob(["\uFEFF" + csv], {type: "text/csv;charset=utf-8"})
+  );
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "pk-technologies-members.csv";
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+updateCounts();
+showPage("home");
+</script>
+</body>
+</html>
